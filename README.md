@@ -94,6 +94,10 @@ Ecco dunque una lezione pratica che nessun corso vi darà esplicitamente, il ver
 
 Più il vostro sistema di tipi è ricco (cioè, più proposizioni logiche potete esprimere), più cose il compilatore può provare circa la correttezza del vostro codice e quindi più i vostri programmi saranno robusti e immuni a bug.
 
+**Nota:**
+
+E potete anche vederla dal punto di vista della semantica assiomatica perché se un algoritmo è una dimostrazione costruttiva allora una precondizione è un'ipotesi perché quando dite "questa funzione richiede che l'input non sia nullo," state assumendo che l'input non sia nullo e dimostrate che il risultato è ben definito. E quando provate che un ciclo mantiene una proprietà, beh, state dimostrando un lemma che supporta la dimostrazione più grande della correttezza dell'algoritmo, quindi un invariante di ciclo è un lemma intermedio del teorema.
+
 
 ## Per i Masochisti Intellettuali
 
