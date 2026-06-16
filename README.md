@@ -317,17 +317,42 @@ m >>= (\x -> k x >>= h) = (m >>= k) >>= h
 Corrisponde all'associatività della congiunzione logica, (A ∧ (B ∧ C)) è logicamente equivalente a ((A ∧ B) ∧ C).
 
 
-## Conclusione
+## Riflessioni Meta-Teoriche (Per Chi Ama Davvero Soffrire)
 
-Se sceglierete di abbracciare il Curry-Howard, magari non nella sua forma più astratta, ma almeno come mentalità, scriverete codice migliore, e nei momenti in cui il compilatore vi rifiuta un pezzo di codice, invece di maledirlo, provate a apprezzare il fatto che vi sta salvando da una dimostrazione falsa. Perché un programma una dimostrazione eseguibile di un teorema logico.
+La Corrispondenza di Curry-Howard funziona *all'interno di un livello fisso di astrazione logica* e quando si passa a livelli di astrazione sempre più alti (tipo, dalla logica proposizionale alla logica predicativa di primo ordine, poi a teorie di ordine superiore), la corrispondenza si estende ma... quando codificate proposizioni di ordine superiore (quantificatori su predicati, non solo su elementi), il sistema di tipi diventa sempre più sofisticato. Un sistema di tipi capace di esprimere *tutte* le proposizioni della teoria degli insiemi ZFC (che è di fatto una logica di ordine infinito) dovrebbe essere infinitamente sofisticato, il che è computazionalmente impossibile. Per questo non esiste un linguaggio di programmazione universale che possa provare tutto ciò che è provabile in matematica classica. Ogni linguaggio è limitato a un certo livello della gerarchia di astrazione.
 
-E quella è una cosa bellissima...
+- Python è al livello 0 (quasi nessuna verifica di proprietà).
+- Java è al livello 1 (verifica di proprietà di base).
+- Haskell è al livello 2-3 (verifica di proprietà complesse).
+- Agda con dependent types è al livello 4-5 (verifica di proprietà arbitrarie, entro limiti computazionali).
+
+Ma nessuno di essi raggiunge il livello infinito di astrazione della matematica pura e questo spiega come il codice possa essere logica, ma allo stesso tempo dimostra che non può mai essere tutta la logica. Ma vi invito anche a riflettere ora su **cosa è logicamente provabile** e **cosa è computazionalmente realizzabile**. Se l'algoritmo non esiste (perché, ad esempio, il teorema dipende dal terzo escluso, che non è costruttivo), allora la proposizione non ha una prova computabile nel senso di Curry-Howard. Quindi la corrispondenza codifica implicitamente la **Tesi di Church-Turing** perché quello che è logicamente provabile in forma costruttiva è quello che è computabile da una macchina di Turing.
+
+Inoltr, un ultimo punto, il Curry-Howard assume che il tipo codifichi completamente la proprietà che state provando, ma nel codice reale, spesso i tipi sono *opachi*. Avete un tipo `User` che è un record con alcuni campi, ma logicamente non vi dice nulla sulla validità di quei campi. Potrebbe contenere un email non valida per esempio. Così avete una situazione dove il programma compila ma la specificazione che intendete (l'email è valida) non è realmente codificata nel tipo. Questo è il **problem della specificazione adeguata**, ma come assicurarvi che il vostro tipo codifichi effettivamente la proprietà che vi importa? La risposta, nella pratica, è quando possibile usare dependent types per codificare proprietà arbitrarie nel tipo stesso e usare smart constructors che validano gli invarianti at runtime, prima di creare il valore e accettare che alcuni invarianti non possono essere provati staticamente. Ovviamente nessuna di queste soluzioni è perfetta ma almeno il Curry-Howard ci fornisce un framework concettuale per capire cosa accadendo.
 
 ---
 
 
+## Conclusione
+
+Se avete letto fino a qui, probabilmente siete in uno di questi stati mentali:
+
+1. **Illuminazione**: "Ah! Finalmente capisco perché il mio compilatore è così fastidioso!"
+2. **Confusione**: "Ho capito qualche parola, ma l'insieme non ha senso."
+3. **Frustrazione**: "Tutto questo è affascinante ma completamente inutile per il codice che scrivo al lavoro."
+4. **Disperazione**: "Perché mi sto leggendo questo?"
+
+Se siete nello stato 3 o 4, vi rassicuro tranquilli, è una reazione completamente razionale, la Corrispondenza di Curry-Howard è una di quelle cose che è teoricamente bellissima ma praticamente remota dalla maggior parte del lavoro di programmazione quotidiano. *Però** (e questo è un "però" importante), comprendere il Curry-Howard vi cambierà il vostro intuito riguardo i sistemi di tipi. Inizierete a scrivere codice in modo diverso e a sfruttare il compilatore come uno strumento di ragionamento. E se sceglierete di abbracciare il Curry-Howard, magari non nella sua forma più astratta, ma almeno come mentalità, scriverete codice migliore, e nei momenti in cui il compilatore vi rifiuta un pezzo di codice, invece di maledirlo, provate a apprezzare il fatto che vi sta salvando da una dimostrazione falsa. Perché un programma una dimostrazione eseguibile di un teorema logico.
+
+E quella è una cosa bellissima...
 
 
+
+Prima di chiudere però devo ammettere che questo è stato un esercizio in quello che potremmo chiamare "intellectual theater". Ho scritto tutto questo in modo volutamente pomposo, e forse eccessivamente elaborato. Ma solo perché il Curry-Howard *merita* questa drammaticità. È una delle idee più belle dell'informatica teorica, e la maggior parte dei programmatori non ne ha mai neanche sentito parlare ad oggi. E quelli che l'hanno sentito spesso la trovano troppo astratta... ma è bellissima. E' un idea che, quando la capite realmente, vi fa sentire come se aveste scoperto un segreto dell'universo. Non è che il codice sembri una dimostrazione, il codice *è* una dimostrazione. E il fatto che la maggior parte dei programmatori non lo sappia? Bene, almeno voi ora lo sapete. E quando scriverete il vostro prossimo programma e il compilatore rifiuterà una linea di codice, potrete dire tra voi e voi stessi: "Ah sì, sta giusto rifiutando la mia proposizione logicamente incoerente". E sarà vero.
+
+**Sperando che questa disquisizione vi abbia stupito, illuminato, intorpidito, forse divertiti e possibilmente anche confuso, vi saluto, vado a pranzo, dicono ci sia un ottimo ristorante al termine dell'universo 🐬**
+
+---
 
 
 
